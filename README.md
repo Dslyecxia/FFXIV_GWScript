@@ -2,18 +2,41 @@
 * Log in to: http://guildwork.com/games/ffxiv#/gilgamesh/shouts
 * Press *F12*
 * Enter in console: 
-```
+```javascript
 (function(){
-var jq = document.createElement('script'); jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"; 
+var shouldNotify = function(msg) {
+  var notifyOn = [
+    'lfg',
+    'hunt',
+    'invite'
+  ];
+  var ignore = [
+    'fate'
+  ];
+  var matches = function(str){ return msg.indexOf(str) !== -1};
+  // Notify if at least 1 keyword is found, yet none of the blacklisted ones are present
+  return notifyOn.some(matches) && !ignore.all(matches);
+};
+var throttle = function(fn, timeout) {
+  var throttleTimer;
+  return function(){
+    if(!throttleTimer) {
+      fn();
+      throttleTimer = setTimeout(function(){
+        throttleTimer = undefined;
+      }, timeout);
+    }
+  }
+};
 var prepNotifications = function() {
-  $('head').append('<audio id="wav" src="http://dslyecxia.com/Application/gw/apert.wav" preload="auto"></audio>'); $('.shouts-inner').bind("DOMSubtreeModified",function(data){String.prototype.contains = function(it) {return this.indexOf(it) != -1; }; s = $('.shout:last-child')[0]; s = $(s).text(); s = s.toLowerCase(); if(s.contains("lfg")){document.getElementById("wav").play(); return true; } if(s.contains("invite")){document.getElementById("wav").play(); return true; } if(s.contains("hunt")){document.getElementById("wav").play(); return true; } });
+  var notifier = document.createElement('audio');
+  notifier.preload = true;
+  notifier.src = "http://dslyecxia.com/Application/gw/apert.wav";
+  document.querySelector('.shouts-inner').addEventListener('DOMSubtreeModified', throttle(function(data){
+    var msg = document.querySelector('.shouts:last-child').innerText;
+    if(shouldNotify(msg)) notifier.play();
+  }, 2500));
 }
-document.getElementsByTagName('body')[0].appendChild(jq);
-var jqint = setInterval(function(){
-  try{
-    prepNotifications();
-    clearInterval(jqint);
-  } catch(e) { /* Not Yet Loaded */ }
-}, 1000);
+prepNotifications();
 })();
 ```
