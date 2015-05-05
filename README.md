@@ -15,7 +15,7 @@ var shouldNotify = function(msg) {
   ];
   var matches = function(str){ return msg.indexOf(str) !== -1};
   // Notify if at least 1 keyword is found, yet none of the blacklisted ones are present
-  return notifyOn.some(matches) && !ignore.all(matches);
+  return notifyOn.some(matches) && !ignore.every(matches);
 };
 var throttle = function(fn, timeout) {
   var throttleTimer;
