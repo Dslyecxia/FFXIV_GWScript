@@ -33,7 +33,7 @@ var prepNotifications = function() {
   notifier.preload = true;
   notifier.src = "http://dslyecxia.com/Application/gw/apert.wav";
   document.querySelector('.shouts-inner').addEventListener('DOMSubtreeModified', throttle(function(data){
-    var msg = document.querySelector('.shouts:last-child').innerText;
+    var msg = document.querySelector('.shout:last-child').innerText;
     if(shouldNotify(msg)) notifier.play();
   }, 2500));
 }
