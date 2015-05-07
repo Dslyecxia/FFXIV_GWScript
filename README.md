@@ -31,7 +31,7 @@ var throttle = function(fn, timeout) {
 var prepNotifications = function() {
   var notifier = document.createElement('audio');
   notifier.preload = true;
-  notifier.src = "http://dslyecxia.com/Application/gw/apert.wav";
+  notifier.src = "http://dev.ffxivclock.com/alerts/alert01.ogg";
   document.querySelector('.shouts-inner').addEventListener('DOMSubtreeModified', throttle(function(data){
     var msg = document.querySelector('.shout:last-child').innerText;
     if(shouldNotify(msg)) notifier.play();
