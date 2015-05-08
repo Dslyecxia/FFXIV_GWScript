@@ -33,7 +33,7 @@ var prepNotifications = function() {
   notifier.preload = true;
   notifier.src = "http://dev.ffxivclock.com/alerts/alert01.ogg";
   document.querySelector('.shouts-inner').addEventListener('DOMSubtreeModified', throttle(function(data){
-    var el = document.querySelector('.shout:last-child').innerText;
+    var el = document.querySelector('.shout:last-child');
     if(el){
       var msg = el.innerText;
       msg = msg.toLowerCase();
