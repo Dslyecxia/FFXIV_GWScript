@@ -33,9 +33,12 @@ var prepNotifications = function() {
   notifier.preload = true;
   notifier.src = "http://dev.ffxivclock.com/alerts/alert01.ogg";
   document.querySelector('.shouts-inner').addEventListener('DOMSubtreeModified', throttle(function(data){
-    var msg = document.querySelector('.shout:last-child').innerText;
-    msg = msg.toLowerCase();
-    if(shouldNotify(msg)) notifier.play();
+    var el = document.querySelector('.shout:last-child').innerText;
+    if(el){
+      var msg = el.innerText;
+      msg = msg.toLowerCase();
+      if(shouldNotify(msg)) notifier.play();
+    }
   }, 2500));
 }
 prepNotifications();
